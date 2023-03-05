@@ -30,8 +30,6 @@ type Hash_line struct {
 
 type Config struct {
 	Arguments struct {
-		Arg1 string `yaml:"arg1"`
-		Arg2 string `yaml:"arg2"`
 		Path string `yaml:"path"`
 		Name string `yaml:"name"`
 	} `yaml:"arguments"`
@@ -54,7 +52,7 @@ func hash_file_md5(filePath string) string {
 	if _, err := io.Copy(hash, file); err != nil {
 		return returnMD5String
 	}
-	//Get the 20 bytes hash
+	//Get the 16 bytes hash
 	hashInBytes := hash.Sum(nil)[:16]
 	//Convert the bytes to a string
 	returnMD5String = hex.EncodeToString(hashInBytes)
@@ -237,8 +235,6 @@ func readConf(filename string) (*Config, error) {
 }
 
 /*
-Arguments.Arg1 - go run
-Arguments.Arg2 - src.go
 Arguments.Name - C:\Users\User\Downloads\go_testing
 Arguments.Path - C:\Users\User\Downloads\go_testing\Blacklist.csv = args[2]
 */
@@ -258,10 +254,10 @@ func main() {
 	args := os.Args
 	fmt.Print("\n")
 	fmt.Printf("All args are: %v\n", args)
-	var size int = GetLengthFile((args[2])) // conf.Arguments.Name
+	var size int = GetLengthFile((args[1])) // conf.Arguments.Name
 	fmt.Printf("Total number of hashes is: %d\n", size)
 	// array to repersent all rows from Blacklist.csv file with headers
-	records := readCsvFile(conf.Arguments.Name) // args[2]
+	records := readCsvFile(args[2]) // conf.Arguments.Name
 	var row Hash_line
 	// 2d array - Each row represents a row from blacklist.csv file
 	var hashes [][]string
