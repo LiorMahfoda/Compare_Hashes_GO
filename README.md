@@ -16,4 +16,6 @@ go run src.go "C:\Users\Lior Mahfoda\Downloads\go_testing" "C:\Users\Lior Mahfod
 
 To make it simple - there is a yaml file(config.yaml) that we can specify the path and name flags\
 instead of rewriting it to the cmd\
+/*
 Just run the following: "go run src.go" after putting the right paths in the config.yaml file.
+*/
