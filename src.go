@@ -19,9 +19,6 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-var global_path = os.Args[1] //conf.Arguments.Name
-var _flag bool
-
 type Hash_line struct {
 	name string
 	md5  string
@@ -34,6 +31,9 @@ type Config struct {
 		Name string `yaml:"name"`
 	} `yaml:"arguments"`
 }
+
+var global_path string //os.Args[1]
+var _flag bool
 
 // MD5 hashes using md5 algorithm
 func hash_file_md5(filePath string) string {
@@ -235,10 +235,11 @@ func readConf(filename string) (*Config, error) {
 }
 
 /*
-Arguments.Name - C:\Users\User\Downloads\go_testing
+Arguments.Name - C:\Users\User\Downloads\go_testing = args[1]
 Arguments.Path - C:\Users\User\Downloads\go_testing\Blacklist.csv = args[2]
 */
 func main() {
+
 	conf, err := readConf("config.yaml")
 	if err != nil {
 		log.Fatal(err)
@@ -254,10 +255,10 @@ func main() {
 	args := os.Args
 	fmt.Print("\n")
 	fmt.Printf("All args are: %v\n", args)
-	var size int = GetLengthFile((args[1])) // conf.Arguments.Name
+	var size int = GetLengthFile((conf.Arguments.Name)) //  args[1]
 	fmt.Printf("Total number of hashes is: %d\n", size)
 	// array to repersent all rows from Blacklist.csv file with headers
-	records := readCsvFile(args[2]) // conf.Arguments.Name
+	records := readCsvFile(conf.Arguments.Name) //args[2]
 	var row Hash_line
 	// 2d array - Each row represents a row from blacklist.csv file
 	var hashes [][]string
@@ -276,7 +277,7 @@ func main() {
 		Help array
 		Contains all paths and file names from user's input of current directory to search
 	*/
-	array := FilePathWalkDir(args[1]) // conf.Arguments.Path
+	array := FilePathWalkDir(conf.Arguments.Path) //  args[1]
 	// List which contains names and hashes of all files from given directory(recuresivly)
 	var completeList [][]string
 	for value := range array {
@@ -292,6 +293,7 @@ func main() {
 		small list is hashes
 		big list is completeList
 	*/
+	global_path = conf.Arguments.Path
 	compare(hashes, completeList, array)
 	if !_flag {
 		fmt.Println("\nNo files exists from Blacklist.csv")
