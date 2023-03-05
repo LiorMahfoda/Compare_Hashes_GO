@@ -12,8 +12,8 @@ In src.go file: run cmd with the following flags\
 To run in cmd :\
 go run src --path "Path to search" --name "Path to Blacklist.csv file"\
 for example:\
-go run src.go -p "C:\Users\Lior Mahfoda\Downloads\go_test" -n "C:\Users\Lior Mahfoda\Downloads\go_testing\Blacklist.csv"\
+go run src.go -p "C:\Users\Lior Mahfoda\Downloads\go_testing" -n "C:\Users\Lior Mahfoda\Downloads\go_testing\Blacklist.csv"\
 
 To make it simple - there is a yaml file(config.yaml) that we can specify the path and name flags\
-instead of rewriting it to che cmd\
+instead of rewriting it to the cmd\
 Just run the following: "go run src.go" after putting the right paths in the config.yaml file.
